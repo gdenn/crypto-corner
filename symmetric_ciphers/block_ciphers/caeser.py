@@ -22,7 +22,7 @@ class Caesar:
 
     @classmethod
     def _routine(cls, message: str, shift: int, direction: Direction):
-        shifted_alphabet: List[str] = cls._shift_alphabet(shift=shift, direction=cls.Direction.LEFT)
+        shifted_alphabet: List[str] = cls._shift_alphabet(shift=shift, direction=direction)
         plain_chars: List[str] = [char for char in message]
 
         cipher_chars: List[str] = []

@@ -4,6 +4,8 @@ import pytest
 
 from symmetric_ciphers.block_ciphers.caeser import Caesar
 
+# a b c d e f g h i j k l m n o p q r s t u v w x y z
+# g h i j k l m n o p q r s t u v w x y z a b c d  e f
 
 @pytest.mark.parametrize("params", [
     {
@@ -62,18 +64,18 @@ def test_shift_alphabet(params):
 @pytest.mark.parametrize("params", [
     {
         "shift": 4,
-        "plain": "",
-        "cipher": ""
+        "cipher": "",
+        "plain": ""
     },
     {
         "shift": 4,
         "plain": "helloworld",
-        "cipher": "dahhksknhz"
+        "cipher": "lippsasvph"
     },
     {
         "shift": 6,
         "plain": "helloworld",
-        "cipher": "byffiqilfx"
+        "cipher": "nkrrucuxrj"
     },
     {
         "shift": 26,
@@ -93,18 +95,18 @@ def test_decrypt(params):
     },
     {
         "shift": 4,
-        "cipher": "helloworld",
-        "plain": "dahhksknhz"
+        "plain": "helloworld",
+        "cipher": "lippsasvph"
     },
     {
         "shift": 6,
-        "cipher": "helloworld",
-        "plain": "byffiqilfx"
+        "plain": "helloworld",
+        "cipher": "nkrrucuxrj"
     },
     {
         "shift": 26,
-        "cipher": "helloworld",
-        "plain": "helloworld"
+        "plain": "helloworld",
+        "cipher": "helloworld"
     },
 ])
 def test_encrypt(params):
