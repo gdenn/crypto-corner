@@ -12,7 +12,7 @@ def caesar():
 @click.option("-m", "--msg", type=str, required=True, help="your plain text")
 @click.option("-s", "--shift", type=int, required=True, help="alphabet shift (left direction)")
 def caesar_encrypt(msg: str, shift: int):
-    cipher_txt: str = Caesar.encrypt(plain_txt=msg, shift=shift)
+    cipher_txt: str = Caesar.encrypt(msg=msg, shift=shift)
     print(cipher_txt)
 
 
@@ -20,7 +20,7 @@ def caesar_encrypt(msg: str, shift: int):
 @click.option("-m", "--msg", type=str, required=True, help="your cipher text")
 @click.option("-s", "--shift", type=int, required=True, help="alphabet shift (right direction)")
 def caesar_decrypt(msg: str, shift: int):
-    plain_txt: str = Caesar.decrypt(cipher_txt=msg, shift=shift)
+    plain_txt: str = Caesar.decrypt(msg=msg, shift=shift)
     print(plain_txt)
 
 

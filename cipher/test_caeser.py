@@ -1,16 +1,30 @@
-from random import seed, sample, randrange
-
 import pytest
 
 from cipher.caeser import Caesar
+from cipher.test_helper import TestHelper
 
-
-def _gen_payload():
-    seed(123)
-    payload = Caesar._alphabet
-    random_shift = randrange(start=0, stop=100000000, step=1)
-    random_txt = "".join(sample(payload, len(payload)))
-    return random_shift, random_txt
+_cipher_params_c1 = [
+    {
+        "shift": 4,
+        "cipher": "",
+        "plain": ""
+    },
+    {
+        "shift": 4,
+        "plain": "helloworld",
+        "cipher": "lippsasvph"
+    },
+    {
+        "shift": 6,
+        "plain": "helloworld",
+        "cipher": "nkrrucuxrj"
+    },
+    {
+        "shift": 26,
+        "plain": "helloworld",
+        "cipher": "helloworld"
+    },
+]
 
 
 class TestCaesar:
@@ -70,62 +84,20 @@ class TestCaesar:
     def test_shift_alphabet(self, params):
         assert Caesar._shift_alphabet(shift=params["shift"], direction=params["direction"]) == params["should"]
 
-    @pytest.mark.parametrize("params", [
-        {
-            "shift": 4,
-            "cipher": "",
-            "plain": ""
-        },
-        {
-            "shift": 4,
-            "plain": "helloworld",
-            "cipher": "lippsasvph"
-        },
-        {
-            "shift": 6,
-            "plain": "helloworld",
-            "cipher": "nkrrucuxrj"
-        },
-        {
-            "shift": 26,
-            "plain": "helloworld",
-            "cipher": "helloworld"
-        },
-    ])
+    @pytest.mark.parametrize("params", _cipher_params_c1)
     def test_decrypt(self, params):
-        assert Caesar.decrypt(cipher_txt=params["cipher"], shift=params["shift"]) == params["plain"]
+        assert Caesar.decrypt(msg=params["cipher"], shift=params["shift"]) == params["plain"]
 
-    @pytest.mark.parametrize("params", [
-        {
-            "shift": 4,
-            "cipher": "",
-            "plain": ""
-        },
-        {
-            "shift": 4,
-            "plain": "helloworld",
-            "cipher": "lippsasvph"
-        },
-        {
-            "shift": 6,
-            "plain": "helloworld",
-            "cipher": "nkrrucuxrj"
-        },
-        {
-            "shift": 26,
-            "plain": "helloworld",
-            "cipher": "helloworld"
-        },
-    ])
+    @pytest.mark.parametrize("params", _cipher_params_c1)
     def test_encrypt(self, params):
-        assert Caesar.encrypt(plain_txt=params["plain"], shift=params["shift"]) == params["cipher"]
+        assert Caesar.encrypt(msg=params["plain"], shift=params["shift"]) == params["cipher"]
 
-    @pytest.mark.repeat(1000)
+    @pytest.mark.parametrize("word", TestHelper.gen_x_words(100))
     def test_cycle_random(self):
-        shift, txt = _gen_payload()
+        shift, txt = TestHelper.gen_word()
         assert txt == Caesar.decrypt(
-            cipher_txt=Caesar.encrypt(
-                plain_txt=txt,
+            msg=Caesar.encrypt(
+                msg=txt,
                 shift=shift
             ),
             shift=shift

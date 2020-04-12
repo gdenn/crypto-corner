@@ -3,7 +3,7 @@ from typing import List
 import pytest
 
 from cipher.affine import Affine
-from cipher.test_helper import gen_plain_msg
+from cipher.test_helper import TestHelper
 from exception.invalid_argument import InvalidArgumentException
 
 
@@ -41,15 +41,12 @@ class TestAffine:
         with pytest.raises(InvalidArgumentException):
             Affine.encrypt(msg="foo", a=a, b=25)
 
-    @pytest.mark.repeat(100)
-    def test_generated(self, sound_a: List[str]):
-        """Generate some plain txt's and check if decrypt(encrypt(x,..) == plain"""
-        plain_txt = gen_plain_msg(alphabet=Affine._alphabet)
-
+    @pytest.mark.parametrize("msg", TestHelper.gen_x_words(50))
+    def test_generated(self, msg: List[str],  sound_a: List[str]):
         for a in sound_a:
             for b in range(0, 26):
-                cipher_txt = Affine.encrypt(msg=plain_txt, a=a, b=b)
-                assert plain_txt != cipher_txt
+                cipher_txt = Affine.encrypt(msg=msg, a=a, b=b)
+                assert msg != cipher_txt
 
                 lo_plain_txt = Affine.decrypt(msg=cipher_txt, a=a, b=b)
-                assert plain_txt == lo_plain_txt
+                assert msg == lo_plain_txt

@@ -1,24 +1,25 @@
 from enum import Enum
 from typing import List
 
+from cipher.alphabet import Alphabet
+from cipher.crypto_helper import ignore_whitespaces
+
 
 class Caesar:
-    _alphabet: List[str] = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r",
-                            "s", "t", "u", "v", "w", "x", "y", "z"]
-
-    _alphabet_len = len(_alphabet)
 
     class Direction(Enum):
         LEFT = 1
         RIGHT = 2
 
     @classmethod
-    def encrypt(cls, plain_txt: str, shift: int):
-        return cls._routine(message=plain_txt, shift=shift, direction=cls.Direction.LEFT)
+    @ignore_whitespaces
+    def encrypt(cls, msg: str, shift: int):
+        return cls._routine(message=msg, shift=shift, direction=cls.Direction.LEFT)
 
     @classmethod
-    def decrypt(cls, cipher_txt: str, shift: int):
-        return cls._routine(message=cipher_txt, shift=shift, direction=cls.Direction.RIGHT)
+    @ignore_whitespaces
+    def decrypt(cls, msg: str, shift: int):
+        return cls._routine(message=msg, shift=shift, direction=cls.Direction.RIGHT)
 
     @classmethod
     def _routine(cls, message: str, shift: int, direction: Direction):
@@ -27,7 +28,7 @@ class Caesar:
 
         cipher_chars: List[str] = []
         for char in plain_chars:
-            index = cls._alphabet.index(char)
+            index = Alphabet.alphabet.index(char)
             cipher_chars.append(shifted_alphabet[index])
 
         return "".join(cipher_chars)
@@ -35,10 +36,10 @@ class Caesar:
     @classmethod
     def _shift_alphabet(cls, shift: int, direction: Direction):
         if direction is cls.Direction.LEFT:
-            appendix: List[str] = cls._alphabet[0: shift]
-            suffix: List[str] = cls._alphabet[shift:len(cls._alphabet)]
+            appendix: List[str] = Alphabet.alphabet[0: shift]
+            suffix: List[str] = Alphabet.alphabet[shift:len(Alphabet.alphabet)]
         else:
-            appendix: List[str] = cls._alphabet[0:(cls._alphabet_len - shift)]
-            suffix: List[str] = cls._alphabet[cls._alphabet_len - shift: cls._alphabet_len]
+            appendix: List[str] = Alphabet.alphabet[0:(Alphabet.alphabet_len - shift)]
+            suffix: List[str] = Alphabet.alphabet[Alphabet.alphabet_len - shift: Alphabet.alphabet_len]
 
         return suffix + appendix
