@@ -1,7 +1,7 @@
 from typing import Dict
 
 
-class FrequencyAnalysis:
+class LetterFrequencyAnalysis:
     _letter_frequency_table_en = {
         "e": 12.02,
         "t": 9.10,
@@ -33,7 +33,7 @@ class FrequencyAnalysis:
 
     @classmethod
     def _decrypt(cls, msg: str, lan="en"):
-        frquency_chart: Dict[str, int] = cls._build_frequency_chart(msg=msg)
+        frequency_chart: Dict[str, int] = cls._build_frequency_chart(msg=msg)
 
     @classmethod
     def _build_frequency_chart(cls, msg: str) -> Dict[str, int]:
