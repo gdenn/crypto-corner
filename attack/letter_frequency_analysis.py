@@ -1,9 +1,8 @@
 import copy
+from collections import OrderedDict
 
 import numpy as np
 import matplotlib.pyplot as plt
-
-from typing import Dict
 
 from cipher.crypto_helper import CryptoHelper
 
@@ -48,7 +47,7 @@ class LetterFrequencyAnalysis:
         cls._plot_frequency_bar_chart_percentage(frequency_bar_chart=frequency_chart_percentage)
 
     @classmethod
-    def _build_frequency_chart(cls, msg: str) -> (Dict[str, int], int):
+    def _build_frequency_chart(cls, msg: str):
         frequency_chart = {}
         total_count = 0
         for cipher_char in msg:
@@ -58,20 +57,22 @@ class LetterFrequencyAnalysis:
                 frequency_chart[cipher_char] = frequency_chart[cipher_char] + 1
             total_count += 1
 
-        return frequency_chart, total_count
+        sorted_frequency_chart = OrderedDict(sorted(frequency_chart.items(), key=lambda kv: kv[1], reverse=True))
+
+        return sorted_frequency_chart, total_count
 
     @classmethod
-    def _transform_to_percentage(cls, frequency_chart: Dict[str, int], total: int):
+    def _transform_to_percentage(cls, frequency_chart, total: int):
         cc_frequency_chart = copy.deepcopy(frequency_chart)
         for letter in cc_frequency_chart:
             total_value = cc_frequency_chart[letter]
-            percentage = (total_value / total) * 100
+            percentage: float = (total_value / total) * 100
             cc_frequency_chart[letter] = percentage
 
         return cc_frequency_chart
 
     @classmethod
-    def _plot_frequency_bar_chart_total(cls, frequency_bar_chart: Dict[str, int], total: int):
+    def _plot_frequency_bar_chart_total(cls, frequency_bar_chart, total: int):
         objects = frequency_bar_chart.keys()
         y_pos = np.arange(len(objects))
         performance = frequency_bar_chart.values()
@@ -84,7 +85,7 @@ class LetterFrequencyAnalysis:
         plt.show()
 
     @classmethod
-    def _plot_frequency_bar_chart_percentage(cls, frequency_bar_chart: Dict[str, int]):
+    def _plot_frequency_bar_chart_percentage(cls, frequency_bar_chart):
         objects = frequency_bar_chart.keys()
         y_pos = np.arange(len(objects))
         performance = frequency_bar_chart.values()
