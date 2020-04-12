@@ -13,7 +13,25 @@ def sound_a() -> List[str]:
 
 
 class TestAffine:
-    @pytest.mark.parametrize("b", [0, 27, 28])
+    @pytest.mark.parametrize("params", [
+        {"index": 1, "a": 3, "b": 3, "expected": "g"},
+        {"index": 1, "a": 5, "b": 12, "expected": "r"},
+        {"index": 5, "a": 5, "b": 12, "expected": "l"},
+        {"index": 25, "a": 5, "b": 12, "expected": "h"},
+    ])
+    def test_encrypt_char(self, params):
+        assert Affine._encrypt_char(index=params["index"], a=params["a"], b=params["b"]) == params["expected"]
+
+    @pytest.mark.parametrize("params", [
+        {"index": 6, "a": 3, "b": 3, "expected": "b"},
+        {"index": 17, "a": 5, "b": 12, "expected": "b"},
+        {"index": 11, "a": 5, "b": 12, "expected": "f"},
+        {"index": 7, "a": 5, "b": 12, "expected": "z"},
+    ])
+    def test_decrypt_char(self, params):
+        assert Affine._decrypt_char(index=params["index"], a=params["a"], b=params["b"]) == params["expected"]
+
+    @pytest.mark.parametrize("b", [-1, 27, 28])
     def test_invalid_b(self, b):
         with pytest.raises(InvalidArgumentException):
             Affine.encrypt(msg="foo", a=1, b=b)
