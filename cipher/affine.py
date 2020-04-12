@@ -28,7 +28,14 @@ class Affine:
             raise InvalidArgumentException(
                 algorithm=cls._algorithm,
                 argument="a",
-                reason="expected ggt (a, k) == 1 for a: {a}".format(a=a)
+                reason="expected gcd(a, k) == 1 for a: {a}".format(a=a)
+            )
+
+        if not (0 <= b < cls._alphabet_len):
+            raise InvalidArgumentException(
+                algorithm=cls._algorithm,
+                argument="b",
+                reason="expected 0 <= b < {alphabet_len} for b: {b}".format(alphabet_len=cls._alphabet_len, b=b)
             )
 
         char_list: List[str] = [c for c in msg]
