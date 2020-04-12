@@ -14,12 +14,14 @@ class Caesar:
     @classmethod
     @CryptoHelper.read_from_file
     @CryptoHelper.ignore_whitespaces
+    @CryptoHelper.to_lowercase
     def encrypt(cls, msg: str, shift: int):
         return cls._routine(message=msg, shift=shift, direction=cls.Direction.LEFT)
 
     @classmethod
     @CryptoHelper.read_from_file
     @CryptoHelper.ignore_whitespaces
+    @CryptoHelper.to_lowercase
     def decrypt(cls, msg: str, shift: int):
         return cls._routine(message=msg, shift=shift, direction=cls.Direction.RIGHT)
 

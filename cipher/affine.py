@@ -14,12 +14,14 @@ class Affine:
     @classmethod
     @CryptoHelper.read_from_file
     @CryptoHelper.ignore_whitespaces
+    @CryptoHelper.to_lowercase
     def encrypt(cls, msg: str, a: int, b: int) -> str:
         return cls._routine(char_function=cls._encrypt_char, msg=msg, a=a, b=b)
 
     @classmethod
     @CryptoHelper.read_from_file
     @CryptoHelper.ignore_whitespaces
+    @CryptoHelper.to_lowercase
     def decrypt(cls, msg: str, a: int, b: int) -> str:
         return cls._routine(char_function=cls._decrypt_char, msg=msg, a=a, b=b)
 

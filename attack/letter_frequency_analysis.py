@@ -1,5 +1,7 @@
 from typing import Dict
 
+from cipher.crypto_helper import CryptoHelper
+
 
 class LetterFrequencyAnalysis:
     _letter_frequency_table_en = {
@@ -32,7 +34,9 @@ class LetterFrequencyAnalysis:
     }
 
     @classmethod
-    def _decrypt(cls, msg: str, lan="en"):
+    @CryptoHelper.read_from_file
+    @CryptoHelper.ignore_whitespaces
+    def analyze(cls, msg: str, lan="en"):
         frequency_chart: Dict[str, int] = cls._build_frequency_chart(msg=msg)
 
     @classmethod

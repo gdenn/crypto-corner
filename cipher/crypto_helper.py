@@ -72,3 +72,16 @@ class CryptoHelper:
                 return function(*args, **kwargs)
 
         return wrapper
+
+    @classmethod
+    def to_lowercase(cls, function):
+        def wrapper(*args, **kwargs):
+            msg: str = kwargs["msg"]
+            msg = msg.lower()
+            kwargs["msg"] = msg
+            return function(*args, **kwargs)
+
+        return wrapper
+
+
+

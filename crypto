@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import click
 
+from cli.letter_frequency_analysis import letter_frequency
 from cli.affine import affine
 from cli.caesar import caesar
 
@@ -11,6 +12,7 @@ def cli():
 
 
 if __name__ == "__main__":
+    cli.add_command(letter_frequency)
     cli.add_command(caesar)
     cli.add_command(affine)
     cli()
