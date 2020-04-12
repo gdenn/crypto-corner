@@ -42,17 +42,19 @@ class CryptoHelper:
             stripped_msg, new_line_indexes = CryptoHelper._strip_sign(msg=stripped_msg, sign="\n")
             kwargs["msg"] = stripped_msg
             converted_msg = function(*args, **kwargs)
-            converted_msg = CryptoHelper._recover_sign(
-                msg=converted_msg,
-                sign="\n",
-                sign_indexes=new_line_indexes
-            )
-            converted_msg = CryptoHelper._recover_sign(
-                msg=converted_msg,
-                sign=" ",
-                sign_indexes=whitespace_indexes
-            )
-            return converted_msg
+
+            if converted_msg is not None:
+                converted_msg = CryptoHelper._recover_sign(
+                    msg=converted_msg,
+                    sign="\n",
+                    sign_indexes=new_line_indexes
+                )
+                converted_msg = CryptoHelper._recover_sign(
+                    msg=converted_msg,
+                    sign=" ",
+                    sign_indexes=whitespace_indexes
+                )
+                return converted_msg
 
         return wrapper
 
