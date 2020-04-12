@@ -37,9 +37,10 @@ class Caesar:
 
     @classmethod
     def _shift_alphabet(cls, shift: int, direction: Direction):
+        shift = shift % Alphabet.alphabet_len
         if direction is cls.Direction.LEFT:
             appendix: List[str] = Alphabet.alphabet[0: shift]
-            suffix: List[str] = Alphabet.alphabet[shift:len(Alphabet.alphabet)]
+            suffix: List[str] = Alphabet.alphabet[shift:Alphabet.alphabet_len]
         else:
             appendix: List[str] = Alphabet.alphabet[0:(Alphabet.alphabet_len - shift)]
             suffix: List[str] = Alphabet.alphabet[Alphabet.alphabet_len - shift: Alphabet.alphabet_len]

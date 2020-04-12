@@ -12,7 +12,7 @@ class TestHelper:
         alphabet_len = Alphabet.alphabet_len
 
         if whitespaces:
-            alphabet += [" "]
+            alphabet += (" ",)
             alphabet_len += 1
 
         random_txt = "".join(sample(alphabet, alphabet_len))

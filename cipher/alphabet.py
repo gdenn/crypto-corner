@@ -1,9 +1,10 @@
-from typing import List
+from typing import List, Tuple
 
 
 class Alphabet:
-
-    alphabet: List[str] = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r",
-                           "s", "t", "u", "v", "w", "x", "y", "z"]
+    alphabet: Tuple[str] = (
+        "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v",
+        "w",
+        "x", "y", "z")
 
     alphabet_len = len(alphabet)

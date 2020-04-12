@@ -1,3 +1,5 @@
+from random import randrange
+
 import pytest
 
 from cipher.caeser import Caesar
@@ -32,52 +34,66 @@ class TestCaesar:
     @pytest.mark.parametrize("params", [
         {
             "shift": 4,
-            "should": ["w", "x", "y", "z", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o",
-                       "p",
-                       "q", "r", "s", "t", "u", "v"],
+            "should": (
+                    "w", "x", "y", "z", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p",
+                    "q",
+                    "r", "s", "t", "u", "v"),
             "direction": Caesar.Direction.RIGHT
         },
         {
             "shift": 6,
-            "should": ["u", "v", "w", "x", "y", "z", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
-                       "n",
-                       "o", "p", "q", "r", "s", "t"],
+            "should": (
+                    "u", "v", "w", "x", "y", "z", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n",
+                    "o",
+                    "p", "q", "r", "s", "t"),
             "direction": Caesar.Direction.RIGHT
         },
         {
             "shift": 26,
-            "should": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r",
-                       "s", "t", "u", "v", "w", "x", "y", "z"],
+            "should": (
+                    "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t",
+                    "u",
+                    "v", "w", "x", "y", "z"),
             "direction": Caesar.Direction.RIGHT
         },
         {
             "shift": 52,
-            "should": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r",
-                       "s", "t", "u", "v", "w", "x", "y", "z"],
+            "should": (
+                    "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t",
+                    "u",
+                    "v", "w", "x", "y", "z"),
             "direction": Caesar.Direction.RIGHT
         },
         {
             "shift": 4,
-            "should": ["e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p",
-                       "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "a", "b", "c", "d"],
+            "should": (
+                    "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x",
+                    "y",
+                    "z", "a", "b", "c", "d"),
             "direction": Caesar.Direction.LEFT
         },
         {
             "shift": 6,
-            "should": ["g", "h", "i", "j", "k", "l", "m", "n",
-                       "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "a", "b", "c", "d", "e", "f"],
+            "should": (
+                    "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
+                    "a",
+                    "b", "c", "d", "e", "f"),
             "direction": Caesar.Direction.LEFT
         },
         {
             "shift": 26,
-            "should": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r",
-                       "s", "t", "u", "v", "w", "x", "y", "z"],
+            "should": (
+                    "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t",
+                    "u",
+                    "v", "w", "x", "y", "z"),
             "direction": Caesar.Direction.LEFT
         },
         {
             "shift": 52,
-            "should": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r",
-                       "s", "t", "u", "v", "w", "x", "y", "z"],
+            "should": (
+                    "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t",
+                    "u",
+                    "v", "w", "x", "y", "z"),
             "direction": Caesar.Direction.LEFT
         },
     ])
@@ -92,13 +108,13 @@ class TestCaesar:
     def test_encrypt(self, params):
         assert Caesar.encrypt(msg=params["plain"], shift=params["shift"]) == params["cipher"]
 
-    @pytest.mark.parametrize("msg", TestHelper.gen_x_words(100))
-    def test_cycle_random(self, msg: str):
-        shift, txt = TestHelper.gen_word()
-        assert txt == Caesar.decrypt(
+    @pytest.mark.parametrize("params", [{"shift": randrange(start=0, step=1, stop=100), "msg": msg} for msg in
+                                        TestHelper.gen_x_words(100)])
+    def test_cycle_random(self, params):
+        assert params["msg"] == Caesar.decrypt(
             msg=Caesar.encrypt(
-                msg=txt,
-                shift=shift
+                msg=params["msg"],
+                shift=params["shift"]
             ),
-            shift=shift
+            shift=params["shift"]
         )
