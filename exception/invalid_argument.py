@@ -3,4 +3,4 @@ class InvalidArgumentException(Exception):
         message = "Invalid argument for {argument} at {algorithm}: {reason}".format(
             argument=argument, algorithm=algorithm, reason=reason)
 
-        super(InvalidArgumentException, self).__init__(message=message)
+        super(InvalidArgumentException, self).__init__(message)
