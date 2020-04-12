@@ -92,8 +92,8 @@ class TestCaesar:
     def test_encrypt(self, params):
         assert Caesar.encrypt(msg=params["plain"], shift=params["shift"]) == params["cipher"]
 
-    @pytest.mark.parametrize("word", TestHelper.gen_x_words(100))
-    def test_cycle_random(self):
+    @pytest.mark.parametrize("msg", TestHelper.gen_x_words(100))
+    def test_cycle_random(self, msg: str):
         shift, txt = TestHelper.gen_word()
         assert txt == Caesar.decrypt(
             msg=Caesar.encrypt(

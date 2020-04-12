@@ -2,7 +2,7 @@ from enum import Enum
 from typing import List
 
 from cipher.alphabet import Alphabet
-from cipher.crypto_helper import ignore_whitespaces
+from cipher.crypto_helper import CryptoHelper
 
 
 class Caesar:
@@ -12,12 +12,14 @@ class Caesar:
         RIGHT = 2
 
     @classmethod
-    @ignore_whitespaces
+    @CryptoHelper.read_from_file
+    @CryptoHelper.ignore_whitespaces
     def encrypt(cls, msg: str, shift: int):
         return cls._routine(message=msg, shift=shift, direction=cls.Direction.LEFT)
 
     @classmethod
-    @ignore_whitespaces
+    @CryptoHelper.read_from_file
+    @CryptoHelper.ignore_whitespaces
     def decrypt(cls, msg: str, shift: int):
         return cls._routine(message=msg, shift=shift, direction=cls.Direction.RIGHT)
 

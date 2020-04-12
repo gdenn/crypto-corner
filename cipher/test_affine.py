@@ -42,7 +42,7 @@ class TestAffine:
             Affine.encrypt(msg="foo", a=a, b=25)
 
     @pytest.mark.parametrize("msg", TestHelper.gen_x_words(50))
-    def test_generated(self, msg: List[str],  sound_a: List[str]):
+    def test_generated(self, msg: List[str], sound_a: List[str]):
         for a in sound_a:
             for b in range(0, 26):
                 cipher_txt = Affine.encrypt(msg=msg, a=a, b=b)

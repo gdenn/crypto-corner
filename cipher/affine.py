@@ -2,7 +2,7 @@ from math import gcd
 from typing import List, Callable
 
 from cipher.alphabet import Alphabet
-from cipher.crypto_helper import ignore_whitespaces
+from cipher.crypto_helper import CryptoHelper
 from exception.invalid_argument import InvalidArgumentException
 
 
@@ -12,12 +12,14 @@ class Affine:
     _inversion_table = {1: 1, 3: 9, 5: 21, 7: 15, 9: 3, 11: 19, 15: 7, 17: 23, 19: 11, 21: 5, 23: 17, 25: 25}
 
     @classmethod
-    @ignore_whitespaces
+    @CryptoHelper.read_from_file
+    @CryptoHelper.ignore_whitespaces
     def encrypt(cls, msg: str, a: int, b: int) -> str:
         return cls._routine(char_function=cls._encrypt_char, msg=msg, a=a, b=b)
 
     @classmethod
-    @ignore_whitespaces
+    @CryptoHelper.read_from_file
+    @CryptoHelper.ignore_whitespaces
     def decrypt(cls, msg: str, a: int, b: int) -> str:
         return cls._routine(char_function=cls._decrypt_char, msg=msg, a=a, b=b)
 
